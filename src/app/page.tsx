@@ -51,8 +51,8 @@ const handleNavigate = ()=>{
       </section>
 
       <section id="consultation" className="mt-16 text-center">
-        <h2 className="text-3xl font-semibold">Let's Build Together!</h2>
-        <p className="text-gray-400 mt-4">Book a free consultation and let's discuss your project.</p>
+        <h2 className="text-3xl font-semibold">Let&apos;s Build Together!</h2>
+        <p className="text-gray-400 mt-4">Book a free consultation and let&apos;s discuss your project.</p>
           <button onClick={handleNavigate} className="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md">
             Get Started
           </button>

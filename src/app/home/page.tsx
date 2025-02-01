@@ -50,7 +50,10 @@ export default function ProjectForm() {
     if (selectedType) {
       let calculatedTimeSpan = selectedType.timeSpan;
 
-      if ((projectType === "web" || projectType === "app") && selectedFlows.length === 3) {
+      if (
+        (projectType === "web" || projectType === "app") &&
+        selectedFlows.length === 3
+      ) {
         calculatedTimeSpan += 15;
       }
 
@@ -58,6 +61,7 @@ export default function ProjectForm() {
     }
   }, [projectType, selectedFlows, setValue]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     console.log("Project Data:", data);
     toast.success("Project submitted successfully!", {
@@ -67,89 +71,26 @@ export default function ProjectForm() {
         color: "#fff",
         fontWeight: "bold",
       },
-    })
+    });
   };
 
   return (
     <div>
-            <AnimatedBackground /> 
-            <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="p-6 gap-4 rounded-md max-w-md mx-auto  text-white"
-    >
-      <h2 className="text-xl font-semibold">Select Your Project</h2>
+      <AnimatedBackground />
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="p-6 gap-4 rounded-md max-w-md mx-auto  text-white"
+      >
+        <h2 className="text-xl font-semibold">Select Your Project</h2>
 
-      <div>
-        <label className="block font-medium mb-2">Project Type</label>
-        <div className="flex flex-col space-y-2">
-          {projectTypes.map(({ label, value }) => (
-            <label key={value} className="flex items-center space-x-2">
-              <input
-                type="radio"
-                {...register("projectType", { required: true })}
-                value={value}
-                className="hidden peer"
-              />
-              <div className="w-4 h-4 border border-white rounded-full flex items-center justify-center peer-checked:bg-white">
-                <div className="w-2 h-2 bg-black rounded-full"></div>
-              </div>
-              <span>{label}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {(projectType === "web" || projectType === "app") && (
         <div>
-          <label className="block font-medium mb-2">Choose Flow</label>
+          <label className="block font-medium mb-2">Project Type</label>
           <div className="flex flex-col space-y-2">
-            {flowOptions.map(({ label, value }) => (
-              <label key={value} className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  {...register("flow")}
-                  value={value}
-                  className="hidden peer"
-                />
-                <div className="w-4 h-4 border border-white rounded-md flex items-center justify-center peer-checked:bg-white">
-                  <div className="w-2 h-2 bg-black rounded-full"></div>
-                </div>
-                <span>{label}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div>
-        <label className="block font-medium mb-2">Frontend Technology</label>
-        <div className="flex flex-col space-y-2">
-          {frontendTech.map(({ label, value }) => (
-            <label key={value} className="flex items-center space-x-2">
-              <input
-                type="radio"
-                {...register("frontend", { required: true })}
-                value={value}
-                className="hidden peer"
-              />
-              <div className="w-4 h-4 border border-white rounded-full flex items-center justify-center peer-checked:bg-white">
-                <div className="w-2 h-2 bg-black rounded-full"></div>
-              </div>
-              <span>{label}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {projectType !== "portfolio" && (
-        <div className="mb-4">
-          <label className="block font-medium mb-2">Backend Technology</label>
-          <div className="flex flex-col space-y-2">
-            {backendTech.map(({ label, value }) => (
+            {projectTypes.map(({ label, value }) => (
               <label key={value} className="flex items-center space-x-2">
                 <input
                   type="radio"
-                  {...register("backend", { required: true })}
+                  {...register("projectType", { required: true })}
                   value={value}
                   className="hidden peer"
                 />
@@ -161,37 +102,99 @@ export default function ProjectForm() {
             ))}
           </div>
         </div>
-      )}
 
-      {projectType !== "portfolio" && (
+        {(projectType === "web" || projectType === "app") && (
+          <div>
+            <label className="block font-medium mb-2">Choose Flow</label>
+            <div className="flex flex-col space-y-2">
+              {flowOptions.map(({ label, value }) => (
+                <label key={value} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    {...register("flow")}
+                    value={value}
+                    className="hidden peer"
+                  />
+                  <div className="w-4 h-4 border border-white rounded-md flex items-center justify-center peer-checked:bg-white">
+                    <div className="w-2 h-2 bg-black rounded-full"></div>
+                  </div>
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div>
+          <label className="block font-medium mb-2">Frontend Technology</label>
+          <div className="flex flex-col space-y-2">
+            {frontendTech.map(({ label, value }) => (
+              <label key={value} className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  {...register("frontend", { required: true })}
+                  value={value}
+                  className="hidden peer"
+                />
+                <div className="w-4 h-4 border border-white rounded-full flex items-center justify-center peer-checked:bg-white">
+                  <div className="w-2 h-2 bg-black rounded-full"></div>
+                </div>
+                <span>{label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {projectType !== "portfolio" && (
+          <div className="mb-4">
+            <label className="block font-medium mb-2">Backend Technology</label>
+            <div className="flex flex-col space-y-2">
+              {backendTech.map(({ label, value }) => (
+                <label key={value} className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    {...register("backend", { required: true })}
+                    value={value}
+                    className="hidden peer"
+                  />
+                  <div className="w-4 h-4 border border-white rounded-full flex items-center justify-center peer-checked:bg-white">
+                    <div className="w-2 h-2 bg-black rounded-full"></div>
+                  </div>
+                  <span>{label}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {projectType !== "portfolio" && (
+          <div className="mb-4">
+            <label className="block font-medium">Database</label>
+            <input
+              {...register("database")}
+              readOnly
+              value={defaultDB}
+              className="mt-1 block w-full p-2 bg-gray-800 border border-gray-600 text-white rounded-md"
+            />
+          </div>
+        )}
+
         <div className="mb-4">
-          <label className="block font-medium">Database</label>
+          <label className="block font-medium">Time Span</label>
           <input
-            {...register("database")}
+            {...register("timeSpan")}
             readOnly
-            value={defaultDB}
             className="mt-1 block w-full p-2 bg-gray-800 border border-gray-600 text-white rounded-md"
           />
         </div>
-      )}
 
-      <div className="mb-4">
-        <label className="block font-medium">Time Span</label>
-        <input
-          {...register("timeSpan")}
-          readOnly
-          className="mt-1 block w-full p-2 bg-gray-800 border border-gray-600 text-white rounded-md"
-        />
-      </div>
-
-      <button
-        type="submit"
-        className="w-full bg-white text-black font-semibold py-2 rounded-md transition hover:bg-gray-300"
-      >
-        Submit
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="w-full bg-white text-black font-semibold py-2 rounded-md transition hover:bg-gray-300"
+        >
+          Submit
+        </button>
+      </form>
     </div>
-  
   );
 }

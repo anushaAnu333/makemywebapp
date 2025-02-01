@@ -8,6 +8,11 @@ const handleNavigate = ()=>{
   routes.push('/home')
 }
 
+const handleNavigateContactUs = ()=>{
+  routes.push('/contact')
+}
+
+
   return (
     <div className="min-h-screen  text-white flex flex-col items-center p-6">
       <section className="text-center max-w-3xl mt-16">
@@ -17,14 +22,35 @@ const handleNavigate = ()=>{
         </p>
         <div className="flex gap-4 mt-4 w-full justify-center ">
         <button className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
-           Connect with us
-        </button>
+        Need Project Maintenance     
+          </button>
 
         <button onClick={handleNavigate} className="bg-white text-black px-6 py-3 rounded-md hover:bg-gray-700 hover:text-white transition">
-           Start Now
-        </button>
+            Need New Project   
+     </button>
       </div>
       </section>
+
+
+
+
+      <section id="consultation" className="mt-16 flex-col flex gap-4 text-center">
+        <h2 className="text-3xl font-semibold">Let&apos;s Build Together!</h2>
+        <p className="text-gray-400 mt-4">Book a free consultation and let&apos;s discuss your project.</p>
+
+
+        <button
+  onClick={handleNavigateContactUs}
+  className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition"
+>
+Connect
+
+</button>
+
+
+        
+      </section>
+
 
       <section className="mt-16 max-w-4xl">
         <h2 className="text-3xl font-semibold text-center">Our Expertise</h2>
@@ -50,14 +76,6 @@ const handleNavigate = ()=>{
         </div>
       </section>
 
-      <section id="consultation" className="mt-16 text-center">
-        <h2 className="text-3xl font-semibold">Let&apos;s Build Together!</h2>
-        <p className="text-gray-400 mt-4">Book a free consultation and let&apos;s discuss your project.</p>
-          <button onClick={handleNavigate} className="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md">
-            Get Started
-          </button>
-        
-      </section>
     </div>
   );
 }

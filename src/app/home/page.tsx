@@ -1,9 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import AnimatedBackground from "../components/Animation";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation"
+
+
+interface ProjectFormData {
+  projectType: string;
+  timeSpan: string;
+  flow: string[];
+  frontend: string;
+  backend: string;
+  database: string;
+};
 
 const projectTypes = [
   { label: "Web", value: "web", timeSpan: 30 },
@@ -31,7 +42,10 @@ const backendTech = [
 const defaultDB = "MongoDB";
 
 export default function ProjectForm() {
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+
+const routes = useRouter()
+
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ProjectFormData>({
     defaultValues: {
       projectType: "web",
       timeSpan: "30 Days",
@@ -43,8 +57,8 @@ export default function ProjectForm() {
   });
 
   const projectType = watch("projectType");
-  const selectedFlows = watch("flow") || [];
-
+  const flowValue = watch("flow"); 
+  const selectedFlows = useMemo(() => flowValue || [], [flowValue]);
   useEffect(() => {
     const selectedType = projectTypes.find((t) => t.value === projectType);
     if (selectedType) {
@@ -61,7 +75,7 @@ export default function ProjectForm() {
     }
   }, [projectType, selectedFlows, setValue]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: ProjectFormData) => {
     if (projectType !== "portfolio" && selectedFlows.length === 0) {
       toast.error("Please select at least one flow.");
       return;
@@ -76,6 +90,7 @@ export default function ProjectForm() {
         fontWeight: "bold",
       },
     });
+    routes.push('/')
   };
 
   return (
@@ -115,7 +130,7 @@ export default function ProjectForm() {
                 <label key={value} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    {...register("flow", { required: projectType !== "portfolio" })}
+                    {...register("flow", { required: projectType as string !== "portfolio" })}
                     value={value}
                     className="hidden peer"
                   />

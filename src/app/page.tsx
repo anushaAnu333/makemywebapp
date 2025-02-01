@@ -20,7 +20,7 @@ const handleNavigateContactUs = ()=>{
         <p className="text-lg mt-4 text-gray-300">
           We transform your ideas into high-performance software today while preparing you for future growth.
         </p>
-        <div className="flex gap-4 mt-4 w-full justify-center ">
+        <div className="flex flex-col md:flex-row gap-4 mt-4 w-full justify-center items-center">
         <button className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
         Need Project Maintenance     
           </button>

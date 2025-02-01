@@ -2,6 +2,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
 const formSchema = z.object({
   phone: z.string().min(10, "Phone number is required"),
   email: z.string().email("Invalid email address"),
@@ -10,6 +13,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function ContactForm() {
+    const routes = useRouter()
   const {
     register,
     handleSubmit,
@@ -20,6 +24,15 @@ export default function ContactForm() {
 
   const onSubmit = (data: FormData) => {
     console.log("Form Data:", data);
+    toast.success("Success", {
+        duration: 3000,
+        style: {
+          background: "#2c2c2c",
+          color: "#fff",
+          fontWeight: "bold",
+        },
+      });
+    routes.push('/')
   };
 
   return (

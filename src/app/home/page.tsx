@@ -31,7 +31,7 @@ const backendTech = [
 const defaultDB = "MongoDB";
 
 export default function ProjectForm() {
-  const { register, handleSubmit, watch, setValue } = useForm({
+  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
       projectType: "web",
       timeSpan: "30 Days",
@@ -61,8 +61,12 @@ export default function ProjectForm() {
     }
   }, [projectType, selectedFlows, setValue]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
+    if (projectType !== "portfolio" && selectedFlows.length === 0) {
+      toast.error("Please select at least one flow.");
+      return;
+    }
+
     console.log("Project Data:", data);
     toast.success("Project submitted successfully!", {
       duration: 3000,
@@ -75,13 +79,13 @@ export default function ProjectForm() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-6">
       <AnimatedBackground />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="p-6 gap-4 rounded-md max-w-md mx-auto  text-white"
+        className=" p-8 rounded-lg  w-full max-w-lg text-white space-y-6"
       >
-        <h2 className="text-xl font-semibold">Select Your Project</h2>
+        <h2 className="text-2xl font-bold text-center">Make Your Project</h2>
 
         <div>
           <label className="block font-medium mb-2">Project Type</label>
@@ -105,13 +109,13 @@ export default function ProjectForm() {
 
         {(projectType === "web" || projectType === "app") && (
           <div>
-            <label className="block font-medium mb-2">Choose Flow</label>
+            <label className="block font-medium mb-2">Choose Flow <span className="text-red-400">*</span></label>
             <div className="flex flex-col space-y-2">
               {flowOptions.map(({ label, value }) => (
                 <label key={value} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    {...register("flow")}
+                    {...register("flow", { required: projectType !== "portfolio" })}
                     value={value}
                     className="hidden peer"
                   />
@@ -122,9 +126,13 @@ export default function ProjectForm() {
                 </label>
               ))}
             </div>
+            {errors.flow && (
+              <p className="text-red-400 text-sm mt-1">At least one flow is required.</p>
+            )}
           </div>
         )}
 
+        {/* Frontend Technology */}
         <div>
           <label className="block font-medium mb-2">Frontend Technology</label>
           <div className="flex flex-col space-y-2">
@@ -146,7 +154,7 @@ export default function ProjectForm() {
         </div>
 
         {projectType !== "portfolio" && (
-          <div className="mb-4">
+          <div>
             <label className="block font-medium mb-2">Backend Technology</label>
             <div className="flex flex-col space-y-2">
               {backendTech.map(({ label, value }) => (
@@ -167,8 +175,9 @@ export default function ProjectForm() {
           </div>
         )}
 
+        {/* Database (Not for Portfolio) */}
         {projectType !== "portfolio" && (
-          <div className="mb-4">
+          <div>
             <label className="block font-medium">Database</label>
             <input
               {...register("database")}
@@ -179,7 +188,8 @@ export default function ProjectForm() {
           </div>
         )}
 
-        <div className="mb-4">
+        {/* Time Span */}
+        <div>
           <label className="block font-medium">Time Span</label>
           <input
             {...register("timeSpan")}
@@ -188,6 +198,7 @@ export default function ProjectForm() {
           />
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-white text-black font-semibold py-2 rounded-md transition hover:bg-gray-300"

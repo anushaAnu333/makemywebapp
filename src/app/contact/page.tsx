@@ -22,18 +22,50 @@ export default function ContactForm() {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log("Form Data:", data);
-    toast.success("Success", {
-        duration: 3000,
-        style: {
-          background: "#2c2c2c",
-          color: "#fff",
-          fontWeight: "bold",
+  // const onSubmit = (data: FormData) => {
+  //   console.log("Form Data:", data);
+  //   toast.success("Success", {
+  //       duration: 3000,
+  //       style: {
+  //         background: "#2c2c2c",
+  //         color: "#fff",
+  //         fontWeight: "bold",
+  //       },
+  //     });
+  //   routes.push('/')
+  // };
+
+  const onSubmit = async (data: FormData) => {
+    try {
+      const response = await fetch("/api/contact", { 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(data),
       });
-    routes.push('/')
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        toast.success("Form submitted successfully!", {
+          duration: 3000,
+          style: {
+            background: "#2c2c2c",
+            color: "#fff",
+            fontWeight: "bold",
+          },
+        });
+  
+        routes.push("/");
+      } else {
+        toast.error(result.error || "Something went wrong!");
+      }
+    } catch (error) {
+      toast.error( { error: error instanceof z.ZodError ? error.errors : "Server error" });
+    }
   };
+  
 
   return (
     <div className="flex items-center justify-center h-[80vh]  bg-gray-900">

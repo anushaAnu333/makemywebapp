@@ -15,7 +15,6 @@ export default function Navbar() {
           height={72} 
           className="object-contain" 
         />
-    {/* <span className="text-lg font-bold text-white">Make My Web App</span> */}
   </div>
 </nav>
   

@@ -88,7 +88,7 @@ export default function ProjectForm() {
           duration: 3000,
           style: { background: "#2c2c2c", color: "#fff", fontWeight: "bold" },
         });
-        router.push("/");
+        router.push("/success");
       } else {
         toast.error(result.error || "Something went wrong!");
       }

@@ -46,7 +46,7 @@ export default function ContactForm() {
           },
         });
   
-        routes.push("/");
+        routes.push("/success");
       } else {
         toast.error(result.error || "Something went wrong!");
       }

@@ -98,7 +98,7 @@ const routes = useRouter()
           },
         });
   
-        routes.push("/");
+        routes.push("/success");
       } else {
         toast.error(result.error || "Something went wrong!");
       }

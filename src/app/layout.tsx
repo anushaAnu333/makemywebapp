@@ -16,7 +16,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Make my web app",
-  description: "A seamless platform to create, customize, and deploy modern web applications effortlessly. Choose your stack, define your flow, and bring your ideas to life with ease.",
+  description:
+    "A seamless platform to create, customize, and deploy modern web applications effortlessly. Choose your stack, define your flow, and bring your ideas to life with ease.",
+  icons: {
+    icon: "/mmLogo.png",
+  },
 };
 
 export default function RootLayout({
@@ -29,8 +33,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-900`}
       >
-        <Navbar/>
-                <Toaster position="top-right" reverseOrder={false} />
+        <Navbar />
+        <Toaster position="top-right" reverseOrder={false} />
 
         {children}
       </body>

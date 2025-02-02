@@ -10,10 +10,6 @@ export default function Navbar() {
     route.push("/");
   };
 
-  const apiKey = process.env.JWT_SECRET;
-
-  console.log("process.env.JWT_SECRET", apiKey);
-
   return (
     <nav
       className="fixed top-0 left-0 w-full flex items-center justify-end px-8 py-4 

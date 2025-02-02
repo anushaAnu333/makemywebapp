@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = "mongodb+srv://arunrajshanker6:CVXKwcckIJ5RKOK7@industrials.hf8or.mongodb.net/"
+const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
   throw new Error("MONGO_URI is missing in environment variables");
@@ -12,7 +12,7 @@ export const connectDB = async () => {
       console.log("Already connected to MongoDB");
       return;
     }
-    
+
     await mongoose.connect(MONGO_URI, {
       dbName: "myDatabase",
     });

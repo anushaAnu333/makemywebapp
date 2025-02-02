@@ -22,8 +22,8 @@ export default function Navbar() {
         <Image
           src="/mmLogo.png"
           alt="Make My Web App Logo"
-          width={80}
-          height={32}
+          width={60}
+          height={60}
           className="object-contain"
         />
       </div>

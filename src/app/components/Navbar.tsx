@@ -10,7 +10,9 @@ export default function Navbar() {
     route.push("/");
   };
 
-  console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
+  const apiKey = process.env.JWT_SECRET;
+
+  console.log("process.env.JWT_SECRET", apiKey);
 
   return (
     <nav

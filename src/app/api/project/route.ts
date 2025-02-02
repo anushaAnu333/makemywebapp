@@ -14,7 +14,6 @@ const projectSchema = z.object({
 });
 
 export async function POST(req: Request) {
-  console.log("req==>",req)
   try {
     await connectDB();
     const body = await req.json();

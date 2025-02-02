@@ -3,10 +3,9 @@ import React from "react";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 import AnimatedBackground from "@/app/components/Animation";
 import { z } from "zod";
-
 
 interface ProjectFormData {
   projectType: string;
@@ -15,7 +14,7 @@ interface ProjectFormData {
   frontend: string;
   backend: string;
   database: string;
-};
+}
 
 const projectTypes = [
   { label: "Web", value: "web", timeSpan: 30 },
@@ -42,9 +41,14 @@ const backendTech = [
 
 const defaultDB = "MongoDB";
 export default function ProjectForm() {
-
-const routes = useRouter()
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ProjectFormData>({
+  const routes = useRouter();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<ProjectFormData>({
     defaultValues: {
       projectType: "web",
       timeSpan: "30 Days",
@@ -56,7 +60,7 @@ const routes = useRouter()
   });
 
   const projectType = watch("projectType");
-  const flowValue = watch("flow"); 
+  const flowValue = watch("flow");
   const selectedFlows = useMemo(() => flowValue || [], [flowValue]);
   useEffect(() => {
     const selectedType = projectTypes.find((t) => t.value === projectType);
@@ -74,20 +78,18 @@ const routes = useRouter()
     }
   }, [projectType, selectedFlows, setValue]);
 
-
   const onSubmit = async (data: ProjectFormData) => {
-    console.log("data", data);
     try {
-      const response = await fetch("api/project", { 
+      const response = await fetch("api/project", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-  
+
       const result = await response.json();
-  
+
       if (response.ok) {
         toast.success("Form submitted successfully!", {
           duration: 3000,
@@ -97,7 +99,7 @@ const routes = useRouter()
             fontWeight: "bold",
           },
         });
-  
+
         routes.push("/success");
       } else {
         toast.error(result.error || "Something went wrong!");
@@ -110,8 +112,7 @@ const routes = useRouter()
       );
     }
   };
-  
-  
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 p-6">
       <AnimatedBackground />
@@ -143,13 +144,17 @@ const routes = useRouter()
 
         {(projectType === "web" || projectType === "app") && (
           <div>
-            <label className="block font-medium mb-2">Choose Flow <span className="text-red-400">*</span></label>
+            <label className="block font-medium mb-2">
+              Choose Flow <span className="text-red-400">*</span>
+            </label>
             <div className="flex flex-col space-y-2">
               {flowOptions.map(({ label, value }) => (
                 <label key={value} className="flex items-center space-x-2">
                   <input
                     type="checkbox"
-                    {...register("flow", { required: projectType as string !== "portfolio" })}
+                    {...register("flow", {
+                      required: (projectType as string) !== "portfolio",
+                    })}
                     value={value}
                     className="hidden peer"
                   />
@@ -161,7 +166,9 @@ const routes = useRouter()
               ))}
             </div>
             {errors.flow && (
-              <p className="text-red-400 text-sm mt-1">At least one flow is required.</p>
+              <p className="text-red-400 text-sm mt-1">
+                At least one flow is required.
+              </p>
             )}
           </div>
         )}

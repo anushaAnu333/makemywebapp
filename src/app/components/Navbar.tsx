@@ -10,6 +10,8 @@ export default function Navbar() {
     route.push("/");
   };
 
+  console.log("process.env.JWT_SECRET", process.env.JWT_SECRET);
+
   return (
     <nav
       className="fixed top-0 left-0 w-full flex items-center justify-end px-8 py-4 
@@ -22,8 +24,8 @@ export default function Navbar() {
         <Image
           src="/mmLogo.png"
           alt="Make My Web App Logo"
-          width={60}
-          height={60}
+          width={80}
+          height={80}
           className="object-contain"
         />
       </div>

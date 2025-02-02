@@ -14,6 +14,8 @@ interface ProjectFormData {
   frontend: string;
   backend: string;
   database: string;
+  email: string;
+  mobile: string;
 }
 
 const projectTypes = [
@@ -56,6 +58,8 @@ export default function ProjectForm() {
       frontend: "react",
       backend: "node",
       database: defaultDB,
+      email: "",
+      mobile: "",
     },
   });
 
@@ -234,6 +238,44 @@ export default function ProjectForm() {
             readOnly
             className="mt-1 block w-full p-2 bg-gray-800 border border-gray-600 text-white rounded-md"
           />
+        </div>
+
+        <div>
+          <label className="block font-medium mb-2">Email</label>
+          <input
+            type="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Enter a valid email address",
+              },
+            })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+            placeholder="Enter your email"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block font-medium mb-2">Mobile</label>
+          <input
+            type="tel"
+            {...register("mobile", {
+              required: "Mobile number is required",
+              pattern: {
+                value: /^\d{10,15}$/,
+                message: "Enter a valid mobile number (10-15 digits)",
+              },
+            })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+            placeholder="Enter your mobile number"
+          />
+          {errors.mobile && (
+            <p className="text-red-500 text-sm">{errors.mobile.message}</p>
+          )}
         </div>
 
         <button

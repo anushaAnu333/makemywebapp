@@ -10,6 +10,8 @@ const projectSchema = z.object({
   frontend: z.string(),
   backend: z.string(),
   database: z.string(),
+  email: z.string().email(),
+  mobile: z.string().regex(/^\d{10,15}$/),
 });
 
 

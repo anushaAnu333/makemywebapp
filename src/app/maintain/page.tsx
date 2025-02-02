@@ -13,6 +13,8 @@ interface ProjectFormData {
   frontend: string;
   backend: string;
   database: string;
+  email: string;
+  mobile: string;
 }
 
 const projectTypes = [
@@ -60,7 +62,11 @@ const defaultDB = "MongoDB";
 
 export default function ProjectForm() {
   const router = useRouter();
-  const { register, handleSubmit,  formState: {  } } = useForm<ProjectFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProjectFormData>({
     defaultValues: {
       projectType: "web",
       managingTimePeriod: "3 Months",
@@ -68,12 +74,14 @@ export default function ProjectForm() {
       frontend: "react",
       backend: "node",
       database: defaultDB,
+      email: "",
+      mobile: "",
     },
   });
 
   const onSubmit = async (data: ProjectFormData) => {
     try {
-      const response = await fetch("/api/maintain", { 
+      const response = await fetch("/api/maintain", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -113,19 +121,29 @@ export default function ProjectForm() {
         {/* Project Type */}
         <div>
           <label className="block font-medium mb-2">Project Type</label>
-          <select {...register("projectType", { required: true })} className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md">
+          <select
+            {...register("projectType", { required: true })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+          >
             {projectTypes.map(({ label, value }) => (
-              <option key={value} value={value}>{label}</option>
+              <option key={value} value={value}>
+                {label}
+              </option>
             ))}
           </select>
         </div>
 
-        {/* Managing Time Period (Dropdown) */}
+        {/* Managing Time Period */}
         <div>
           <label className="block font-medium mb-2">Managing Time Period</label>
-          <select {...register("managingTimePeriod", { required: true })} className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md">
+          <select
+            {...register("managingTimePeriod", { required: true })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+          >
             {managingTimePeriodOptions.map(({ label, value }) => (
-              <option key={value} value={value}>{label}</option>
+              <option key={value} value={value}>
+                {label}
+              </option>
             ))}
           </select>
         </div>
@@ -154,9 +172,14 @@ export default function ProjectForm() {
         {/* Frontend Technology */}
         <div>
           <label className="block font-medium mb-2">Frontend Technology</label>
-          <select {...register("frontend", { required: true })} className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md">
+          <select
+            {...register("frontend", { required: true })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+          >
             {frontendTech.map(({ label, value }) => (
-              <option key={value} value={value}>{label}</option>
+              <option key={value} value={value}>
+                {label}
+              </option>
             ))}
           </select>
         </div>
@@ -164,9 +187,14 @@ export default function ProjectForm() {
         {/* Backend Technology */}
         <div>
           <label className="block font-medium mb-2">Backend Technology</label>
-          <select {...register("backend", { required: true })} className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md">
+          <select
+            {...register("backend", { required: true })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+          >
             {backendTech.map(({ label, value }) => (
-              <option key={value} value={value}>{label}</option>
+              <option key={value} value={value}>
+                {label}
+              </option>
             ))}
           </select>
         </div>
@@ -180,6 +208,45 @@ export default function ProjectForm() {
             value={defaultDB}
             className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
           />
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="block font-medium mb-2">Email</label>
+          <input
+            type="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "Enter a valid email address",
+              },
+            })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+            placeholder="Enter your email"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+        </div>
+
+        <div>
+          <label className="block font-medium mb-2">Mobile</label>
+          <input
+            type="tel"
+            {...register("mobile", {
+              required: "Mobile number is required",
+              pattern: {
+                value: /^\d{10,15}$/,
+                message: "Enter a valid mobile number (10-15 digits)",
+              },
+            })}
+            className="w-full p-2 bg-gray-800 border border-gray-600 rounded-md"
+            placeholder="Enter your mobile number"
+          />
+          {errors.mobile && (
+            <p className="text-red-500 text-sm">{errors.mobile.message}</p>
+          )}
         </div>
 
         {/* Submit Button */}

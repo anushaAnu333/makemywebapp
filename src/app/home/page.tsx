@@ -1,10 +1,11 @@
 "use client";
-
+import React from "react";
 import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import AnimatedBackground from "../components/Animation";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation"
+import AnimatedBackground from "@/app/components/Animation";
+import { z } from "zod";
 
 
 interface ProjectFormData {
@@ -40,11 +41,9 @@ const backendTech = [
 ];
 
 const defaultDB = "MongoDB";
-
 export default function ProjectForm() {
 
 const routes = useRouter()
-
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<ProjectFormData>({
     defaultValues: {
       projectType: "web",
@@ -75,24 +74,44 @@ const routes = useRouter()
     }
   }, [projectType, selectedFlows, setValue]);
 
-  const onSubmit = (data: ProjectFormData) => {
-    if (projectType !== "portfolio" && selectedFlows.length === 0) {
-      toast.error("Please select at least one flow.");
-      return;
+
+  const onSubmit = async (data: ProjectFormData) => {
+    console.log("data", data);
+    try {
+      const response = await fetch("api/project", { 
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        toast.success("Form submitted successfully!", {
+          duration: 3000,
+          style: {
+            background: "#2c2c2c",
+            color: "#fff",
+            fontWeight: "bold",
+          },
+        });
+  
+        routes.push("/");
+      } else {
+        toast.error(result.error || "Something went wrong!");
+      }
+    } catch (error) {
+      toast.error(
+        error instanceof z.ZodError
+          ? error.errors.map((err) => err.message).join(", ")
+          : "Server error"
+      );
     }
-
-    console.log("Project Data:", data);
-    toast.success("Project submitted successfully!", {
-      duration: 3000,
-      style: {
-        background: "#2c2c2c",
-        color: "#fff",
-        fontWeight: "bold",
-      },
-    });
-    routes.push('/')
   };
-
+  
+  
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900 p-6">
       <AnimatedBackground />
@@ -147,7 +166,6 @@ const routes = useRouter()
           </div>
         )}
 
-        {/* Frontend Technology */}
         <div>
           <label className="block font-medium mb-2">Frontend Technology</label>
           <div className="flex flex-col space-y-2">
@@ -190,7 +208,6 @@ const routes = useRouter()
           </div>
         )}
 
-        {/* Database (Not for Portfolio) */}
         {projectType !== "portfolio" && (
           <div>
             <label className="block font-medium">Database</label>
@@ -203,7 +220,6 @@ const routes = useRouter()
           </div>
         )}
 
-        {/* Time Span */}
         <div>
           <label className="block font-medium">Time Span</label>
           <input
@@ -213,7 +229,6 @@ const routes = useRouter()
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full bg-white text-black font-semibold py-2 rounded-md transition hover:bg-gray-300"

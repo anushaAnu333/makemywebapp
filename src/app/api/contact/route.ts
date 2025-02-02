@@ -1,25 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
-
-export interface IContact extends Document {
-  email: string;
-  phone: string;
-}
-
-const ContactSchema = new Schema<IContact>(
-  {
-    email: { type: String, required: true },
-    phone: { type: String, required: true },
-  },
-  { timestamps: true }
-);
-
- const Contact = mongoose.models.Contact || mongoose.model<IContact>("Contact", ContactSchema);
-
-
-
 import { NextResponse } from "next/server";
 
 import { z } from "zod";
+import { Contact } from "@/app/server/models/contact.modal";
 import { connectDB } from "../../server/config/db";
 
 const contactSchema = z.object({

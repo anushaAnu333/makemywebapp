@@ -7,10 +7,9 @@ export interface IProject extends Document {
   frontend: string;
   backend: string;
   database: string;
-  createdAt?: Date;
 }
 
-const ProjectSchema: Schema = new Schema(
+const ProjectSchema = new Schema<IProject>(
   {
     projectType: { type: String, required: true },
     timeSpan: { type: String, required: true },
@@ -22,4 +21,4 @@ const ProjectSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-export const ProjectModel = mongoose.models.Project || mongoose.model<IProject>("Project", ProjectSchema);
+export const Project = mongoose.models.Project || mongoose.model<IProject>("Project", ProjectSchema);

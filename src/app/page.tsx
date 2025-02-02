@@ -12,6 +12,9 @@ const handleNavigateContactUs = ()=>{
   routes.push('/contact')
 }
 
+const handleNavigateMaintain = ()=>{
+  routes.push('/maintain')
+}
 
   return (
     <div className="min-h-screen  text-white flex flex-col items-center p-6">
@@ -20,8 +23,8 @@ const handleNavigateContactUs = ()=>{
         <p className="text-lg mt-4 text-gray-300">
           We transform your ideas into high-performance software today while preparing you for future growth.
         </p>
-        <div className="flex flex-col md:flex-row gap-4 mt-4 w-full justify-center items-center">
-        <button className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
+<div className="flex flex-col md:flex-row gap-4 mt-4 w-full justify-center items-center">
+        <button onClick={handleNavigateMaintain} className="border border-white text-white px-6 py-3 rounded-md hover:bg-white hover:text-black transition">
         Need Project Maintenance     
           </button>
 

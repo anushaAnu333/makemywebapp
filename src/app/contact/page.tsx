@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -22,22 +23,10 @@ export default function ContactForm() {
     resolver: zodResolver(formSchema),
   });
 
-  // const onSubmit = (data: FormData) => {
-  //   console.log("Form Data:", data);
-  //   toast.success("Success", {
-  //       duration: 3000,
-  //       style: {
-  //         background: "#2c2c2c",
-  //         color: "#fff",
-  //         fontWeight: "bold",
-  //       },
-  //     });
-  //   routes.push('/')
-  // };
 
   const onSubmit = async (data: FormData) => {
     try {
-      const response = await fetch("/api/contact", { 
+      const response = await fetch("api/contact", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",

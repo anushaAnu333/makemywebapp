@@ -73,7 +73,7 @@ export default function ProjectForm() {
 
   const onSubmit = async (data: ProjectFormData) => {
     try {
-      const response = await fetch("/api/project", { 
+      const response = await fetch("/api/maintain", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",

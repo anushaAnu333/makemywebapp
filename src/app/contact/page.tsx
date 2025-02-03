@@ -5,6 +5,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { Html, Head, Main, NextScript } from 'next/document';
 
 const formSchema = z.object({
   phone: z.string().min(10, "Phone number is required"),
@@ -97,6 +98,21 @@ export default function ContactForm() {
           Submit
         </button>
       </form>
+
+
+
+
+
+<div className="mt-4 max-w-[300px] max-h-[300px]">
+<script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4090559505750271"
+          crossOrigin="anonymous"
+        ></script>
+</div>
+       
+
+
     </div>
   );
 }

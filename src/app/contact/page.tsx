@@ -98,10 +98,6 @@ export default function ContactForm() {
         </button>
       </form>
 
-
-
-
-
 <div className="mt-4 max-w-[300px] max-h-[300px]">
 <script
           async
@@ -110,8 +106,6 @@ export default function ContactForm() {
         ></script>
 </div>
        
-
-
     </div>
   );
 }

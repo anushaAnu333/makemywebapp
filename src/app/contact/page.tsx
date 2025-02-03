@@ -5,7 +5,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { Html, Head, Main, NextScript } from 'next/document';
 
 const formSchema = z.object({
   phone: z.string().min(10, "Phone number is required"),

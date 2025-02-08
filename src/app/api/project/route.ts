@@ -36,14 +36,3 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
-  try {
-    await connectDB();
-
-    const projects = await Project.find(); 
-
-    return NextResponse.json({ data: projects }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json({ error: error instanceof z.ZodError ? error.errors : "Server error" }, { status: 500 });
-  }
-}
